@@ -1,35 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
-import logo from "./logo.svg";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
+import { getApiBase } from "./app/config";
+import logo from "./logo.svg"
 
-const apiBase = "http://localhost:4000";
-
-const callApi = () => {};
+const apiBase = getApiBase();
 
 function App() {
   const [message, setMessage] = useState("hard-coded from frontend");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const getMessage = async () => {
-      const res = await axios.get(`${apiBase}/hello`);
+  const getHello = async () => {
+    setLoading(true);
+    const res = await axios.get(`${apiBase}/hello`);
 
-      console.log("🚀 ~ file: App.tsx ~ line 18 ~ getMessage ~ res", res);
+    const { data } = res;
 
-      const { data } = res;
+    setMessage(data);
 
-      setMessage(data);
-    };
-
-    getMessage();
-  }, []);
+    setLoading(false);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <button type="button" onClick={callApi}>
+        {loading && <p>loading...</p>}
+        <button type="button" onClick={getHello}>
           click me
         </button>
         <p>{message}</p>
