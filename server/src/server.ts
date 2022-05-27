@@ -23,7 +23,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://warm-frangollo-0dc699.netlify.app/",
+];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
