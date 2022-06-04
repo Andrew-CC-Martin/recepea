@@ -10,7 +10,7 @@ const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };
 app.use(cors(options));
-const port = 4000; // default port to listen
+const port = process.env.PORT || 4000;
 
 app.get("/", (_req, res) => {
   res.send("recepea app!");
