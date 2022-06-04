@@ -4,11 +4,10 @@ import axios from "axios";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { getApiBase } from "./app/config";
-import logo from "./logo.svg"
-
-const apiBase = getApiBase();
+import logo from "./logo.svg";
 
 function App() {
+  const apiBase = getApiBase();
   const [message, setMessage] = useState("hard-coded from frontend");
   const [loading, setLoading] = useState(false);
 
