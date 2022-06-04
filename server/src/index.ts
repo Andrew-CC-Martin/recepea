@@ -1,16 +1,25 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+
 const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://warm-frangollo-0dc699.netlify.app/",
+  "https://warm-frangollo-0dc699.netlify.app",
 ];
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
 };
+
+// Security (helmet recommended in express docs)
+if (process.env.NODE_ENV === "production") {
+  app.use(helmet());
+}
+
 app.use(cors(options));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const port = process.env.PORT || 4000;
