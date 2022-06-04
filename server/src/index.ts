@@ -12,9 +12,12 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 const port = 4000; // default port to listen
 
-// define a route handler for the default home page
-app.get("/hello", (req, res) => {
-  res.send("Hello world!");
+app.get("/", (_req, res) => {
+  res.send("recepea app!");
+});
+
+app.get("/hello", (_req, res) => {
+  res.send("Hello, world!");
 });
 
 // start the Express server
