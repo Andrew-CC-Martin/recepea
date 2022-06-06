@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
 
 // initialize configuration - dotenv is used to load environment variables from a .env file
 dotenv.config();
@@ -40,3 +41,36 @@ app.get("/hello", (_req, res) => {
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
+
+const prisma = new PrismaClient();
+
+async function main() {
+  await prisma.user.create({
+    data: {
+      name: "Alice",
+      email: "alice@prisma.io",
+      posts: {
+        create: { title: "Hello World" },
+      },
+      profile: {
+        create: { bio: "I like turtles" },
+      },
+    },
+  });
+
+  const allUsers = await prisma.user.findMany({
+    include: {
+      posts: true,
+      profile: true,
+    },
+  });
+  console.dir(allUsers, { depth: null });
+}
+
+main()
+  .catch((e) => {
+    throw e;
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
