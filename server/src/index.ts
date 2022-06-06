@@ -2,6 +2,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import dotenv from "dotenv";
+
+// initialize configuration - dotenv is used to load environment variables from a .env file
+dotenv.config();
 
 const app = express();
 
