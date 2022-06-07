@@ -29,48 +29,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const port = process.env.PORT || 4000;
 
-app.get("/", (_req, res) => {
-  res.send("recepea app!");
+const prisma = new PrismaClient();
+
+async function getIngredients() {
+  const allIngredients = await prisma.ingredient.findMany();
+  return allIngredients;
+}
+
+app.get("/ingredients", async (_req, res) => {
+  const allIngredients = await getIngredients();
+  res.json(allIngredients);
 });
 
-app.get("/hello", (_req, res) => {
-  res.send("Hello again, world!");
+app.get("/", (_req, res) => {
+  res.send("Recepea app!");
 });
 
 // start the Express server
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`);
 });
-
-const prisma = new PrismaClient();
-
-async function main() {
-  await prisma.user.create({
-    data: {
-      name: "Alice",
-      email: "alice@prisma.io",
-      posts: {
-        create: { title: "Hello World" },
-      },
-      profile: {
-        create: { bio: "I like turtles" },
-      },
-    },
-  });
-
-  const allUsers = await prisma.user.findMany({
-    include: {
-      posts: true,
-      profile: true,
-    },
-  });
-  console.dir(allUsers, { depth: null });
-}
-
-main()
-  .catch((e) => {
-    throw e;
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

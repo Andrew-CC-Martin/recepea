@@ -10,28 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
+
+model Ingredient {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  vegetarian  Boolean?
+  vegan       Boolean?
+  glutenFree  Boolean?
+  kosher      Boolean?
+  dairyFree   Boolean?
+  nutsFree    Boolean?
+  treeNutFree Boolean?
+  sugarFree   Boolean?
+  keto        Boolean?
+  imgUrl      String?
+
+  measureQuantity Measure @relation(fields: [measureId], references: [id])
+  measureId       Int
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
-
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
+model Measure {
+  id           Int          @id @default(autoincrement())
+  name         String
+  abbreviation String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  Ingredient   Ingredient[]
 }

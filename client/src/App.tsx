@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import axios from "axios";
 
 import { Counter } from "./features/counter/Counter";
@@ -6,18 +6,19 @@ import "./App.css";
 import { getApiBase } from "./app/config";
 import logo from "./logo.svg";
 
+import { Ingredient } from "./app/types";
+
 function App() {
   const apiBase = getApiBase();
-  const [message, setMessage] = useState("hard-coded from frontend");
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getHello = async () => {
     setLoading(true);
-    const res = await axios.get(`${apiBase}/hello`);
+    const { data } = await axios.get(`${apiBase}/ingredients`);
+    console.log("🚀 ~ file: App.tsx ~ line 19 ~ getHello ~ data", data);
 
-    const { data } = res;
-
-    setMessage(data);
+    setIngredients(data);
 
     setLoading(false);
   };
@@ -27,9 +28,15 @@ function App() {
       <header className="App-header">
         {loading && <p>loading...</p>}
         <button type="button" onClick={getHello}>
-          click me
+          get ingredients
         </button>
-        <p>{message}</p>
+        {ingredients.map((ingredient) => (
+          <Fragment key={ingredient.id}>
+            <h1>{ingredient.name}</h1>
+            <p>{ingredient.description}</p>
+            <img src={ingredient.imgUrl} alt={ingredient.name} />
+          </Fragment>
+        ))}
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
         <p>
