@@ -1,0 +1,4 @@
+# Config for netlify
+# Redirects from what the browser requests to what we serve
+# Necessary to 'fake' the paths for react-router-dom, and create a true single page application
+/* /index.html 200

@@ -1,11 +1,15 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+
 import { store } from "./app/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { Context } from "./app/context";
+import { AxiosContext } from "./app/context";
+
+import { api } from "./app/data";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -13,9 +17,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Context.Provider value={{ theme: "LIGHT" }}>
-        <App />
-      </Context.Provider>
+      <AxiosContext.Provider value={{ api }}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AxiosContext.Provider>
     </Provider>
   </React.StrictMode>
 );
