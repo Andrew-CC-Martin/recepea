@@ -5,7 +5,7 @@ import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import logo from "./logo.svg";
 import { AxiosContext } from "./app/context";
-import { Ingredient } from "./app/types";
+import { Ingredient, ApiResponse } from "./app/types";
 
 function App() {
   return (
@@ -20,7 +20,13 @@ function App() {
   );
 }
 
-const Home = () => <p>Recepea</p>;
+const Home = () => {
+  return (
+    <>
+      <h1>Recepea</h1>
+    </>
+  );
+};
 
 export default App;
 
@@ -51,7 +57,8 @@ export const SomeCrap = () => {
 
   const getIngredients = async () => {
     setLoading(true);
-    const { data } = await api.get("/ingredients");
+
+    const { data }: ApiResponse = await api.get("/ingredients");
 
     setIngredients(data);
 
