@@ -1,53 +1,48 @@
-import { useState, Fragment, useContext } from "react";
+import { FC, useState, Fragment, useContext } from "react";
 import { Route, Routes, Link } from "react-router-dom";
+import { Button, Layout } from "antd";
 
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import logo from "./logo.svg";
 import { AxiosContext } from "./app/context";
 import { Ingredient, ApiResponse } from "./app/types";
+import { SignUp } from "./features/signup/SignUp";
+import { LogIn } from "./features/login/LogIn";
+import { RecepeaFooter } from "./features/footer/RecepeaFooter";
+
+const { Content } = Layout;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <Content>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
-      </header>
+      </Content>
+      <RecepeaFooter />
     </div>
   );
 }
 
-const Home = () => {
+const Home: FC = () => {
   return (
     <>
       <h1>Recepea</h1>
+      <Button type="primary">
+        <Link to="/login">Log in</Link>
+      </Button>
+      <Button type="default">
+        <Link to="/signup">Sign up</Link>
+      </Button>
     </>
   );
 };
 
 export default App;
-
-const SignUp = () => {
-  return (
-    <>
-      <h2>Welcome to</h2>
-      <h1>RECEPEA</h1>
-      <h3>For only $8/month, you'll get</h3>
-      <h4>- Access to infinite source of global recipes</h4>
-      <h4>- Exclusive discounts on grocery shopping</h4>
-      <h4>- Price comparison every time you buy</h4>
-      <h4>- Easy click-and-collect directly from recipe to grocery</h4>
-      <span>
-        <p>Already a member?</p>
-        <Link to="/login">Login</Link>
-      </span>
-      <button type="button">Subscribe</button>
-    </>
-  );
-};
 
 export const SomeCrap = () => {
   const { api } = useContext(AxiosContext);

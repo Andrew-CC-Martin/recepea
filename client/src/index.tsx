@@ -7,7 +7,7 @@ import { store } from "./app/store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { AxiosContext } from "./app/context";
+import { AxiosContext, ThemeContext } from "./app/context";
 
 import { api } from "./app/data";
 
@@ -17,11 +17,13 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AxiosContext.Provider value={{ api }}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AxiosContext.Provider>
+      <ThemeContext.Provider value={{ theme: "light" }}>
+        <AxiosContext.Provider value={{ api }}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AxiosContext.Provider>
+      </ThemeContext.Provider>
     </Provider>
   </React.StrictMode>
 );
