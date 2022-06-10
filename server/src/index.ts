@@ -36,6 +36,10 @@ async function getIngredients() {
   return allIngredients;
 }
 
+app.get("/dont-panic", async (_req, res) => {
+  res.status(418).send("🐳 Oh no, not again 🌷");
+});
+
 app.get("/ingredients", async (_req, res) => {
   const allIngredients = await getIngredients();
   res.json(allIngredients);
