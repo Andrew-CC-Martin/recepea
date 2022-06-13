@@ -34,8 +34,8 @@ const FooterMenu: FC = (): JSX.Element => {
   ];
 
   // todo - set defaultSelectedKeys for current page where relevant
-  // <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
-  return <Menu items={menuItems} theme={theme} />;
+  // <Menu defaultSelectedKeys={["mail"]}>
+  return <Menu mode="horizontal" items={menuItems} theme={theme} />;
 };
 
 export const RecepeaFooter = () => {

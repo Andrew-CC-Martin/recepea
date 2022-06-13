@@ -3,8 +3,8 @@ import { Layout } from "antd";
 
 import "./App.css";
 
-import { SignUp } from "./features/signup/SignUp";
-import { LogIn } from "./features/login/LogIn";
+import { SignUp } from "./features/auth/signup/SignUp";
+import { LogIn } from "./features/auth/login/LogIn";
 import { Home } from "./features/home/Home";
 import { Ingredients } from "./features/pantry/Ingredients";
 import { RecepeaFooter } from "./features/footer/RecepeaFooter";
