@@ -2,7 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
-import { validateEmail } from "../utils";
+import { validateEmail, validatePassword } from "../utils";
 import ormClient from "../db";
 
 const router = express.Router();
@@ -14,11 +14,18 @@ router.post("/", async (req, res) => {
   } = req;
 
   const validEmail = validateEmail(email);
-  // todo - validate password
 
   if (!validEmail) {
     return res.status(500).send({
       message: "couldn't create user: invalid email",
+    });
+  }
+
+  const validPassword = validatePassword(rawPassword);
+
+  if (!validPassword) {
+    return res.status(500).send({
+      message: "couldn't create user: invalid password",
     });
   }
 
