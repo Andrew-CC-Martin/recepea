@@ -1,17 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
 import { BrowserRouter } from "react-router-dom";
+
+import { store } from "./app/store";
+import { ThemeContext } from "./app/context";
 import App from "./App";
 
-test("renders learn react link", () => {
+test("renders learn react link", async () => {
   render(
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ThemeContext.Provider value={{ theme: "light" }}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeContext.Provider>
     </Provider>
   );
 
-  expect(screen.getByText(/Recepea/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/Recepea/i)).toBeInTheDocument();
+  });
 });
