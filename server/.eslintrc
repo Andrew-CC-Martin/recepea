@@ -7,5 +7,7 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "rules": {}
+  "rules": {
+    "no-debugger": "warn"
+  }
 }

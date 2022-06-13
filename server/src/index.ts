@@ -3,7 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
+
+import usersRouter from "./routes/users";
+import ingredientsRouter from "./routes/ingredients";
 
 // initialize configuration - dotenv is used to load environment variables from a .env file
 dotenv.config();
@@ -27,23 +29,15 @@ app.use(cors(options));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+/**
+ * Everything else in this file is boilerplate/config
+ * This is where the magic happens
+ */
+app.use("/users", usersRouter);
+app.use("/ingredients", ingredientsRouter);
+
 const port = process.env.PORT || 4000;
-
-const prisma = new PrismaClient();
-
-async function getIngredients() {
-  const allIngredients = await prisma.ingredient.findMany();
-  return allIngredients;
-}
-
-app.get("/dont-panic", async (_req, res) => {
-  res.status(418).send("🐳 Oh no, not again 🌷");
-});
-
-app.get("/ingredients", async (_req, res) => {
-  const allIngredients = await getIngredients();
-  res.json(allIngredients);
-});
 
 app.get("/", (_req, res) => {
   res.send("Recepea app!");
