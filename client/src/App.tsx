@@ -21,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/ingredients" element={<Ingredients />} />
         </Routes>
       </Content>
       <RecepeaFooter />
@@ -44,7 +45,7 @@ const Home: FC = () => {
 
 export default App;
 
-export const SomeCrap = () => {
+export const Ingredients = () => {
   const { api } = useContext(AxiosContext);
 
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
