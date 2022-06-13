@@ -47,3 +47,14 @@ model Measure {
   updatedAt    DateTime     @updatedAt
   Ingredient   Ingredient[]
 }
+
+// todo
+// model UserIngredient, which is a join table between User and Ingredient
+// model UserIngredient {
+//   id           Int      @id @default(autoincrement())
+//   userId       Int      @relation(fields: [userId], references: [id])
+//   ingredientId Int      @relation(fields: [ingredientId], references: [id])
+//   quantity     Int
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+// }

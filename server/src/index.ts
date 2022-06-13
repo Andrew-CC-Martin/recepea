@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 import usersRouter from "./routes/users";
 import ingredientsRouter from "./routes/ingredients";
+// import userIngredientsRouter from "./routes/userIngredients";
 
 // initialize configuration - dotenv is used to load environment variables from a .env file
 dotenv.config();
@@ -36,6 +37,8 @@ app.use(cookieParser());
  */
 app.use("/users", usersRouter);
 app.use("/ingredients", ingredientsRouter);
+// todo
+// app.use("/pantry-items", userIngredientsRouter);
 
 const port = process.env.PORT || 4000;
 

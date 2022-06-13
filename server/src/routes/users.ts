@@ -10,7 +10,7 @@ const router = express.Router();
 // Any post to /users should create a new user
 router.post("/", async (req, res) => {
   const {
-    body: { email, name, rawPassword },
+    body: { email, name, password },
   } = req;
 
   const validEmail = validateEmail(email);
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     });
   }
 
-  const validPassword = validatePassword(rawPassword);
+  const validPassword = validatePassword(password);
 
   if (!validPassword) {
     return res.status(500).send({
@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
 
   try {
     const salt = await bcrypt.genSalt();
-    const encryptedPassword = await bcrypt.hash(rawPassword, salt);
+    const encryptedPassword = await bcrypt.hash(password, salt);
 
     const { id } = await ormClient.user.create({
       data: {
@@ -42,6 +42,7 @@ router.post("/", async (req, res) => {
     });
 
     const jsonWebToken = await jwt.sign({ userId: id }, process.env.SECRET);
+
     res.send({ jsonWebToken });
   } catch (err) {
     console.log("couldn't create user. err.message:", err.message);
@@ -53,7 +54,7 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const {
-    body: { email, rawPassword },
+    body: { email, password },
   } = req;
   try {
     const user = await ormClient.user.findUnique({
@@ -62,7 +63,7 @@ router.post("/login", async (req, res) => {
       },
     });
 
-    const match = await bcrypt.compare(rawPassword, user.password);
+    const match = await bcrypt.compare(password, user.password);
 
     if (match) {
       // generate jwt
@@ -79,5 +80,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// module.exports = router
 export default router;
+
+// router.post('/login', async (req, res) => {
+//   try {
+//       const user = await User.findByCredentials(req.body.email, req.body.password)
+//       const token = await user.generateAuthToken()
+//       res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+//       res.redirect('/users/me')
+//   } catch (error) {
+//       res.status(400).send()
+//   }
+// })

@@ -5,6 +5,10 @@ export const validateEmail = (email: string): boolean =>
   /\S+@\S+\.\S+/.test(email);
 
 export const validatePassword = (password: string): boolean => {
+  if (!password) {
+    return false;
+  }
+
   if (password.length < 8) {
     return false;
   }
