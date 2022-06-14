@@ -36,14 +36,13 @@ export const LogIn: FC = (): JSX.Element => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
     >
       <Form.Item label="Email" name="email">
-        <Input />
+        <Input autoComplete="email" />
       </Form.Item>
 
       <Form.Item label="Password" name="password">
-        <Input.Password />
+        <Input.Password autoComplete="current-password" />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

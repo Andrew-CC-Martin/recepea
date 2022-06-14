@@ -33,7 +33,6 @@ export const SignUp: FC = (): JSX.Element => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      autoComplete="off"
     >
       <Form.Item
         label="Email"
@@ -44,7 +43,7 @@ export const SignUp: FC = (): JSX.Element => {
           { type: "email", message: "Email isn't valid" },
         ]}
       >
-        <Input />
+        <Input autoComplete="email" />
       </Form.Item>
 
       <Form.Item
@@ -53,7 +52,7 @@ export const SignUp: FC = (): JSX.Element => {
         validateTrigger={["onBlur"]}
         rules={[{ required: true, message: "Please input a name" }]}
       >
-        <Input />
+        <Input autoComplete="name" />
       </Form.Item>
 
       <Form.Item
@@ -105,7 +104,7 @@ export const SignUp: FC = (): JSX.Element => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password autoComplete="new-password" />
       </Form.Item>
 
       <Form.Item
@@ -131,7 +130,7 @@ export const SignUp: FC = (): JSX.Element => {
           }),
         ]}
       >
-        <Input.Password />
+        <Input.Password autoComplete="new-password" />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
