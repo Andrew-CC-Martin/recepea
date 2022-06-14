@@ -1,5 +1,6 @@
 import { FC, useContext } from "react";
 import { Layout, Menu } from "antd";
+import { Link } from "react-router-dom";
 import {
   HomeOutlined,
   HeartOutlined,
@@ -17,19 +18,35 @@ const FooterMenu: FC = (): JSX.Element => {
   const menuItems = [
     {
       key: "home",
-      icon: <HomeOutlined />,
+      icon: (
+        <Link to="/">
+          <HomeOutlined />
+        </Link>
+      ),
     },
     {
-      key: "shopping-cart",
-      icon: <ShoppingCartOutlined />,
+      key: "pantry",
+      icon: (
+        <Link to="/pantry">
+          <ShoppingCartOutlined />
+        </Link>
+      ),
     },
     {
-      key: "likes",
-      icon: <HeartOutlined />,
+      key: "saved-recipes",
+      icon: (
+        <Link to="/saved-recipes">
+          <HeartOutlined />
+        </Link>
+      ),
     },
     {
       key: "profile",
-      icon: <UserOutlined />,
+      icon: (
+        <Link to="/profile">
+          <UserOutlined />
+        </Link>
+      ),
     },
   ];
 

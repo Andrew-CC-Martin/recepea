@@ -1,9 +1,27 @@
-import { Button, Checkbox, Form, Input } from "antd";
-import { FC } from "react";
+import { Button, Form, Input } from "antd";
+import { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { api } from "../../../app/data";
+import { useAppDispatch } from "../../../app/hooks";
+import { setJWT } from "../authSlice";
+import { AuthContext } from "../../../app/context";
 
 export const LogIn: FC = (): JSX.Element => {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const { setAuthenticated } = useContext(AuthContext);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onFinish = async (values: any) => {
+    try {
+      const response = await api.post("/users/login", values);
+      const { data: jsonWebToken } = response;
+      dispatch(setJWT(jsonWebToken));
+      setAuthenticated(true);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -20,33 +38,17 @@ export const LogIn: FC = (): JSX.Element => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
-      >
+      <Form.Item label="Email" name="email">
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
-      >
+      <Form.Item label="Password" name="password">
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="remember"
-        valuePropName="checked"
-        wrapperCol={{ offset: 8, span: 16 }}
-      >
-        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
-          Submit
+          Log In
         </Button>
       </Form.Item>
     </Form>

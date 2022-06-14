@@ -4,12 +4,9 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { store } from "./app/store";
-import App from "./App";
+import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { AxiosContext, ThemeContext } from "./app/context";
-
-import { api } from "./app/data";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -17,13 +14,9 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeContext.Provider value={{ theme: "light" }}>
-        <AxiosContext.Provider value={{ api }}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </AxiosContext.Provider>
-      </ThemeContext.Provider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

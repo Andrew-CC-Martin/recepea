@@ -4,14 +4,16 @@ import { AxiosInstance } from "axios";
 import { api } from "../data";
 
 // create a custom type to restrict theme to only be these values
-type ThemeType = "light" | "dark";
+export type ThemeType = "light" | "dark";
 
-interface AppContextInterface {
+export interface ThemeContextInterface {
   theme: ThemeType;
+  setTheme: (theme: ThemeType) => void;
 }
 
-export const ThemeContext = createContext<AppContextInterface>({
+export const ThemeContext = createContext<ThemeContextInterface>({
   theme: "light",
+  setTheme: (_theme: ThemeType) => {},
 });
 
 interface ApiContextInterface {
@@ -21,4 +23,14 @@ interface ApiContextInterface {
 // First param to createContext is defaultValue
 export const AxiosContext = createContext<ApiContextInterface>({
   api,
+});
+
+interface AuthContextInterface {
+  authenticated: boolean;
+  setAuthenticated: (authenticated: boolean) => void;
+}
+
+export const AuthContext = createContext<AuthContextInterface>({
+  authenticated: false,
+  setAuthenticated: (_authenticated: boolean) => {},
 });
