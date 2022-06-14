@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Request, Response } from "express";
 
 import { validateEmail, validatePassword } from "../utils";
 import ormClient from "../db";
@@ -8,7 +9,7 @@ import ormClient from "../db";
 const router = express.Router();
 
 // Any post to /users should create a new user
-router.post("/", async (req, res) => {
+router.post("/signup", async (req: Request, res: Response) => {
   const {
     body: { email, name, password },
   } = req;
@@ -52,10 +53,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
   const {
     body: { email, password },
   } = req;
+
   try {
     const user = await ormClient.user.findUnique({
       where: {
@@ -72,6 +74,10 @@ router.post("/login", async (req, res) => {
         process.env.SECRET
       );
       res.send({ jsonWebToken });
+    } else {
+      res.status(500).send({
+        message: "couldn't log in",
+      });
     }
   } catch (err) {
     res.status(500).send({
@@ -81,14 +87,3 @@ router.post("/login", async (req, res) => {
 });
 
 export default router;
-
-// router.post('/login', async (req, res) => {
-//   try {
-//       const user = await User.findByCredentials(req.body.email, req.body.password)
-//       const token = await user.generateAuthToken()
-//       res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
-//       res.redirect('/users/me')
-//   } catch (error) {
-//       res.status(400).send()
-//   }
-// })
