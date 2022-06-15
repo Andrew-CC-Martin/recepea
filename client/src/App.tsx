@@ -8,12 +8,14 @@ import { SignUp } from "./features/auth/signup/SignUp";
 import { LogIn } from "./features/auth/login/LogIn";
 import { Home } from "./features/home/Home";
 import { Ingredients } from "./features/pantry/Ingredients";
+import { Profile } from "./features/profile/Profile";
 import { RecepeaFooter } from "./features/footer/RecepeaFooter";
 import { AuthContext, AxiosContext, ThemeContext } from "./app/context";
 import { api } from "./app/data";
 import { ThemeType } from "./app/context";
 import { getJWT } from "./features/auth/authSlice";
 import { useAppSelector } from "./app/hooks";
+import { NotFound } from "./features/404/404";
 
 const { Content } = Layout;
 
@@ -39,12 +41,16 @@ export const App: FC = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<LogIn />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<NotFound />} />
                 {authenticated && (
-                  <Route path="/ingredients" element={<Ingredients />} />
+                  <>
+                    <Route path="/ingredients" element={<Ingredients />} />
+                    <Route path="/profile" element={<Profile />} />
+                  </>
                 )}
               </Routes>
             </Content>
-            <RecepeaFooter />
+            {authenticated && <RecepeaFooter />}
           </AxiosContext.Provider>
         </ThemeContext.Provider>
       </AuthContext.Provider>
