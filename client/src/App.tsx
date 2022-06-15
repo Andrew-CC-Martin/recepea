@@ -9,7 +9,7 @@ import { LogIn } from "./features/auth/login/LogIn";
 import { Home } from "./features/home/Home";
 import { Ingredients } from "./features/pantry/Ingredients";
 import { Profile } from "./features/profile/Profile";
-import { RecepeaFooter } from "./features/footer/RecepeaFooter";
+import { RecepeaHeader } from "./features/header/RecepeaHeader";
 import { AuthContext, AxiosContext, ThemeContext } from "./app/context";
 import { api } from "./app/data";
 import { ThemeType } from "./app/context";
@@ -32,10 +32,11 @@ export const App: FC = () => {
   const [theme, setTheme] = useState<ThemeType>("light");
 
   return (
-    <div className="App">
-      <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
-        <ThemeContext.Provider value={{ theme, setTheme }}>
-          <AxiosContext.Provider value={{ api }}>
+    <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        <AxiosContext.Provider value={{ api }}>
+          <Layout style={{ minHeight: "100vh" }}>
+            {authenticated && <RecepeaHeader />}
             <Content>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -50,10 +51,9 @@ export const App: FC = () => {
                 )}
               </Routes>
             </Content>
-            {authenticated && <RecepeaFooter />}
-          </AxiosContext.Provider>
-        </ThemeContext.Provider>
-      </AuthContext.Provider>
-    </div>
+          </Layout>
+        </AxiosContext.Provider>
+      </ThemeContext.Provider>
+    </AuthContext.Provider>
   );
 };

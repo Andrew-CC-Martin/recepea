@@ -10,17 +10,18 @@ import {
 
 import { ThemeContext } from "../../app/context";
 
-const { Footer } = Layout;
+const { Header } = Layout;
 
-const FooterMenu: FC = (): JSX.Element => {
+const HeaderMenu: FC = (): JSX.Element => {
   const { theme } = useContext(ThemeContext);
+  const iconStyle = { fontSize: "20px" };
 
   const menuItems = [
     {
       key: "home",
       icon: (
         <Link to="/">
-          <HomeOutlined />
+          <HomeOutlined style={iconStyle} />
         </Link>
       ),
     },
@@ -28,7 +29,7 @@ const FooterMenu: FC = (): JSX.Element => {
       key: "pantry",
       icon: (
         <Link to="/pantry">
-          <ShoppingCartOutlined />
+          <ShoppingCartOutlined style={iconStyle} />
         </Link>
       ),
     },
@@ -36,7 +37,7 @@ const FooterMenu: FC = (): JSX.Element => {
       key: "saved-recipes",
       icon: (
         <Link to="/saved-recipes">
-          <HeartOutlined />
+          <HeartOutlined style={iconStyle} />
         </Link>
       ),
     },
@@ -44,7 +45,7 @@ const FooterMenu: FC = (): JSX.Element => {
       key: "profile",
       icon: (
         <Link to="/profile">
-          <UserOutlined />
+          <UserOutlined style={iconStyle} />
         </Link>
       ),
     },
@@ -52,13 +53,17 @@ const FooterMenu: FC = (): JSX.Element => {
 
   // todo - set defaultSelectedKeys for current page where relevant
   // <Menu defaultSelectedKeys={["mail"]}>
-  return <Menu mode="horizontal" items={menuItems} theme={theme} />;
+  return (
+    <>
+      <Menu mode="horizontal" items={menuItems} theme={theme} />
+    </>
+  );
 };
 
-export const RecepeaFooter = () => {
+export const RecepeaHeader: FC = (): JSX.Element => {
   return (
-    <Footer>
-      <FooterMenu />
-    </Footer>
+    <Header style={{ padding: 0 }}>
+      <HeaderMenu />
+    </Header>
   );
 };
