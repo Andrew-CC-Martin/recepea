@@ -2,17 +2,19 @@ import { useContext } from "react";
 import { Button, Switch, Space, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../app/context";
+import { useThemeSwitcher } from "react-css-theme-switcher";
 
 import { setJWT } from "../auth/authSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { ThemeContext } from "../../app/context";
 
 export const Profile = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { setAuthenticated } = useContext(AuthContext);
+  const { switcher, currentTheme, themes } = useThemeSwitcher();
+
+  const toggleTheme = () =>
+    switcher({ theme: currentTheme === "light" ? themes.dark : themes.light });
 
   const logOut = () => {
     dispatch(setJWT(""));
@@ -28,9 +30,7 @@ export const Profile = () => {
         style={{ display: "flex", alignItems: "center" }}
       >
         <Divider>Set Theme</Divider>
-        <Switch
-          onChange={() => setTheme(theme === "light" ? "dark" : "light")}
-        />
+        <Switch checked={currentTheme === "light"} onChange={toggleTheme} />
         <Divider />
         <Button type="primary" onClick={logOut}>
           Log out

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Layout, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -8,8 +8,6 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 
-import { ThemeContext } from "../../app/context";
-
 const { Header } = Layout;
 
 export const getActiveMenuItem = (path: string): string => {
@@ -18,7 +16,6 @@ export const getActiveMenuItem = (path: string): string => {
 };
 
 const HeaderMenu: FC = (): JSX.Element => {
-  const { theme } = useContext(ThemeContext);
   const { pathname } = useLocation();
 
   const activeMenuItem = getActiveMenuItem(pathname);
@@ -63,15 +60,12 @@ const HeaderMenu: FC = (): JSX.Element => {
     },
   ];
 
-  // todo - set defaultSelectedKeys for current page where relevant
-  // <Menu defaultSelectedKeys={["mail"]}>
   return (
     <>
       <Menu
         defaultSelectedKeys={[activeMenuItem]}
         mode="horizontal"
         items={menuItems}
-        theme={theme}
       />
     </>
   );
