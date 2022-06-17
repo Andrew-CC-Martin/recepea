@@ -5,6 +5,7 @@ import { AuthContext } from "../../app/context";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 
 import { setJWT } from "../auth/authSlice";
+import { setTheme } from "../../themes/themeSlice";
 import { useAppDispatch } from "../../app/hooks";
 
 export const Profile = () => {
@@ -13,8 +14,11 @@ export const Profile = () => {
   const { setAuthenticated } = useContext(AuthContext);
   const { switcher, currentTheme, themes } = useThemeSwitcher();
 
-  const toggleTheme = () =>
-    switcher({ theme: currentTheme === "light" ? themes.dark : themes.light });
+  const toggleTheme = () => {
+    const theme = currentTheme === "light" ? themes.dark : themes.light;
+    switcher({ theme });
+    dispatch(setTheme(theme));
+  };
 
   const logOut = () => {
     dispatch(setJWT(""));
@@ -29,8 +33,8 @@ export const Profile = () => {
         size="middle"
         style={{ display: "flex", alignItems: "center" }}
       >
-        <Divider>Set Theme</Divider>
-        <Switch checked={currentTheme === "light"} onChange={toggleTheme} />
+        <Divider>Dark Theme</Divider>
+        <Switch checked={currentTheme === "dark"} onChange={toggleTheme} />
         <Divider />
         <Button type="primary" onClick={logOut}>
           Log out
