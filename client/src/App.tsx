@@ -2,8 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import { Layout } from "antd";
 
-import "./App.css";
-
 import { SignUp } from "./features/auth/signup/SignUp";
 import { LogIn } from "./features/auth/login/LogIn";
 import { Home } from "./features/home/Home";
